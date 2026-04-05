@@ -3,6 +3,8 @@ import 'package:audify/core/config/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
+
+  //light Theme data
   static final lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: AppColors.primary,
@@ -11,7 +13,7 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.btnForColor,
+        foregroundColor: AppColors.whiteColor,
         textStyle: AppTextStyle.lightlineTextStyle(
           20,
         ).copyWith(fontWeight: FontWeight.bold),
@@ -20,6 +22,7 @@ class AppTheme {
     ),
   );
 
+  //Dark Theme data
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: AppColors.primary,
@@ -28,7 +31,7 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.btnForColor,
+        foregroundColor: AppColors.whiteColor,
         textStyle: AppTextStyle.lightlineTextStyle(
           20,
         ).copyWith(fontWeight: FontWeight.bold),
