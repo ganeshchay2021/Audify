@@ -1,14 +1,14 @@
-import 'dart:ui';
-
 import 'package:audify/common/widgets/button/app_icon_button.dart';
 import 'package:audify/common/widgets/button/basic_app_button.dart';
 import 'package:audify/core/config/assets/app_images.dart';
 import 'package:audify/core/config/assets/app_vectors.dart';
 import 'package:audify/core/config/theme/app_colors.dart';
+import 'package:audify/core/routes/app_routes.dart';
 import 'package:audify/presentation/choose_mode/bloc/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class ChooseModeView extends StatelessWidget {
   const ChooseModeView({super.key});
@@ -62,7 +62,9 @@ class ChooseModeView extends StatelessWidget {
                                 );
                               },
                             ),
+
                             Gap(15),
+                            
                             //dark mode text
                             Text(
                               "Dark Mode",
@@ -73,7 +75,9 @@ class ChooseModeView extends StatelessWidget {
                             ),
                           ],
                         ),
+
                         Gap(40),
+
                         Column(
                           children: [
                             //app icon
@@ -85,8 +89,10 @@ class ChooseModeView extends StatelessWidget {
                                 );
                               },
                             ),
+
                             Gap(15),
                             //dark mode text
+                            
                             Text(
                               "Light Mode",
                               style: TextStyle(
@@ -105,12 +111,7 @@ class ChooseModeView extends StatelessWidget {
                     BasicAppButton(
                       title: "Continue",
                       onTap: () {
-                        // Navigator.pushReplacement(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => LoginView(),
-                        //   ),
-                        // );
+                        Get.offNamed(AppRoutes.signInOrSignUp);
                       },
                       height: 60,
                     ),

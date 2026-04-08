@@ -2,9 +2,11 @@ import 'package:audify/common/widgets/button/basic_app_button.dart';
 import 'package:audify/core/config/assets/app_images.dart';
 import 'package:audify/core/config/assets/app_vectors.dart';
 import 'package:audify/core/config/theme/app_colors.dart';
+import 'package:audify/core/routes/app_routes.dart';
 import 'package:audify/presentation/choose_mode/page/choose_mode_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class GetStartedView extends StatelessWidget {
   const GetStartedView({super.key});
@@ -63,12 +65,7 @@ class GetStartedView extends StatelessWidget {
                     BasicAppButton(
                       title: "Get Started",
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChooseModeView(),
-                          ),
-                        );
+                        Get.offNamed(AppRoutes.choseMode);
                       },
                       height: 60,
                     ),
