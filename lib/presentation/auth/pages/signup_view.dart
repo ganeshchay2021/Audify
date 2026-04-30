@@ -12,6 +12,7 @@ import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -52,19 +53,27 @@ class _SignupViewState extends State<SignupView> {
         var snackBar = SnackBar(
           backgroundColor: Colors.red,
           behavior: SnackBarBehavior.floating,
-          content: Text(l, style: TextStyle(fontWeight: FontWeight.bold)),
+          content: Text(
+            l,
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       },
-      (r) {
+      (r) async {
         // 1. Remove any existing snackbar immediately
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
         var snackBar = SnackBar(
           backgroundColor: Colors.green,
           behavior: SnackBarBehavior.floating,
-          content: Text(r, style: TextStyle(fontWeight: FontWeight.bold)),
+          content: Text(
+            r,
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool("isFirstTime", false);
         Get.offAllNamed(AppRoutes.home);
       },
     );
@@ -74,146 +83,160 @@ class _SignupViewState extends State<SignupView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BasicAppBar(appLogo: AppVectors.appLogo),
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          key: _formKey,
-          child: Column(
-            children: [
-              //register text
-              _registerText(),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: IntrinsicHeight(
+                child: Form(
+                  autovalidateMode: AutovalidateMode.onUnfocus,
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      //register text
+                      _registerText(),
 
-              Gap(20),
+                      Gap(20),
 
-              //textfield for Name
-              AppTextField(
-                validate: (value) {
-                  if (value == "" || value == null) {
-                    return "Name is empty";
-                  }
-                  return null;
-                },
-                controller: fullNameController,
-                textInputType: TextInputType.name,
-                hintText: "Full Name",
-                prefixIcon: Icons.person_outline,
-              ),
-
-              Gap(20),
-
-              //Textfield for email
-              AppTextField(
-                validate: (value) {
-                  if (value == "" || value == null) {
-                    return "Email is empty";
-                  }
-                  return null;
-                },
-                controller: emailController,
-                textInputType: TextInputType.emailAddress,
-                hintText: "Enter Email",
-                prefixIcon: Icons.email_outlined,
-              ),
-
-              Gap(20),
-
-              //Textfield for password
-              AppTextField(
-                validate: (value) {
-                  if (value == "" || value == null) {
-                    return "Password is empty";
-                  }
-                  return null;
-                },
-                controller: passwordController,
-                obsecureText: true,
-                suffixIcon: Icons.visibility,
-                textInputType: TextInputType.visiblePassword,
-                hintText: "Password",
-                prefixIcon: Icons.lock_outline,
-              ),
-
-              Gap(40),
-
-              //signup button
-              BasicAppButton(
-                title: "Create Account",
-                onTap: () async {
-                  if (_formKey.currentState!.validate()) {
-                    Loader.show(context);
-                    await signUp(context);
-                    Loader.hide();
-                  }
-                },
-                height: 70,
-              ),
-
-              Gap(20),
-
-              //Divider
-              Row(
-                children: [
-                  Expanded(child: Divider(thickness: 2)),
-                  Gap(10),
-                  Text("Or", style: TextStyle(fontSize: 15)),
-                  Gap(10),
-                  Expanded(child: Divider(thickness: 2)),
-                ],
-              ),
-
-              Gap(20),
-
-              //social signup
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  //google button
-                  IconButton(
-                    onPressed: () {},
-                    icon: FaIcon(FontAwesomeIcons.google, color: Colors.red),
-                  ),
-                  Gap(20),
-
-                  //Apple Button
-                  IconButton(
-                    onPressed: () {},
-                    icon: FaIcon(FontAwesomeIcons.apple, size: 30),
-                  ),
-                ],
-              ),
-
-              Spacer(),
-
-              //Go to sigin page
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    color: context.isDarkMode ? Colors.white : Colors.black,
-                    fontSize: 16,
-                  ),
-                  text: "Already have an Account? ",
-                  children: [
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Get.offNamed(AppRoutes.signIn);
+                      //textfield for Name
+                      AppTextField(
+                        validate: (value) {
+                          if (value == "" || value == null) {
+                            return "Name is empty";
+                          }
+                          return null;
                         },
-                      text: "Sign in",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green,
+                        controller: fullNameController,
+                        textInputType: TextInputType.name,
+                        hintText: "Full Name",
+                        prefixIcon: Icons.person_outline,
                       ),
-                    ),
-                  ],
+
+                      Gap(20),
+
+                      //Textfield for email
+                      AppTextField(
+                        validate: (value) {
+                          if (value == "" || value == null) {
+                            return "Email is empty";
+                          }
+                          return null;
+                        },
+                        controller: emailController,
+                        textInputType: TextInputType.emailAddress,
+                        hintText: "Enter Email",
+                        prefixIcon: Icons.email_outlined,
+                      ),
+
+                      Gap(20),
+
+                      //Textfield for password
+                      AppTextField(
+                        validate: (value) {
+                          if (value == "" || value == null) {
+                            return "Password is empty";
+                          }
+                          return null;
+                        },
+                        controller: passwordController,
+                        obsecureText: true,
+                        suffixIcon: Icons.visibility,
+                        textInputType: TextInputType.visiblePassword,
+                        hintText: "Password",
+                        prefixIcon: Icons.lock_outline,
+                      ),
+
+                      Gap(40),
+
+                      //signup button
+                      BasicAppButton(
+                        title: "Create Account",
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            Loader.show(context);
+                            await signUp(context);
+                            Loader.hide();
+                          }
+                        },
+                        height: 70,
+                      ),
+
+                      Gap(20),
+
+                      //Divider
+                      Row(
+                        children: [
+                          Expanded(child: Divider(thickness: 2)),
+                          Gap(10),
+                          Text("Or", style: TextStyle(fontSize: 15)),
+                          Gap(10),
+                          Expanded(child: Divider(thickness: 2)),
+                        ],
+                      ),
+
+                      Gap(20),
+
+                      //social signup
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          //google button
+                          IconButton(
+                            onPressed: () {},
+                            icon: FaIcon(
+                              FontAwesomeIcons.google,
+                              color: Colors.red,
+                            ),
+                          ),
+                          Gap(20),
+
+                          //Apple Button
+                          IconButton(
+                            onPressed: () {},
+                            icon: FaIcon(FontAwesomeIcons.apple, size: 30),
+                          ),
+                        ],
+                      ),
+
+                      Spacer(),
+                      Gap(20),
+                      //Go to sigin page
+                      RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            color: context.isDarkMode
+                                ? Colors.white
+                                : Colors.black,
+                            fontSize: 16,
+                          ),
+                          text: "Already have an Account? ",
+                          children: [
+                            TextSpan(
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Get.offNamed(AppRoutes.signIn);
+                                },
+                              text: "Sign in",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Gap(40),
+                    ],
+                  ),
                 ),
               ),
-
-              Gap(40),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

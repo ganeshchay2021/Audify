@@ -1,4 +1,3 @@
-import 'package:audify/common/widgets/appbar/app_bar.dart';
 import 'package:audify/common/widgets/button/basic_app_button.dart';
 import 'package:audify/core/config/assets/app_images.dart';
 import 'package:audify/core/config/assets/app_vectors.dart';
