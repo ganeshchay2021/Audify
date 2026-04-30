@@ -13,7 +13,6 @@ import 'package:audify/domain/repository/song_repository.dart';
 import 'package:audify/domain/usecases/auth/signin_usecases.dart';
 import 'package:audify/domain/usecases/auth/signout_usecase.dart';
 import 'package:audify/domain/usecases/auth/signup_usecases.dart';
-import 'package:audify/domain/usecases/recover_password/recovery_password_usecases.dart';
 import 'package:audify/domain/usecases/recover_password/reset_password_usecases.dart';
 import 'package:audify/domain/usecases/songs/favourite_song_usecase.dart';
 import 'package:audify/domain/usecases/songs/playlist_usecase.dart';

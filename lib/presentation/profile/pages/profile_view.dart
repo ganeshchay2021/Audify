@@ -5,8 +5,6 @@ import 'package:audify/core/routes/app_routes.dart';
 import 'package:audify/data/sources/shared_prefs/shared_preference.dart';
 import 'package:audify/presentation/profile/bloc/favourite_song_cubit.dart';
 import 'package:audify/presentation/profile/bloc/favourite_song_state.dart';
-import 'package:audify/presentation/song_player/bloc/song_player_cubit.dart';
-import 'package:audify/presentation/song_player/bloc/song_player_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
