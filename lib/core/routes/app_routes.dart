@@ -7,4 +7,14 @@ class AppRoutes {
   static final String signIn = '/signIn';
   static final String signUp = '/signUp';
   static final String home = '/home';
+  static final String songPlayer = '/songPlayer';
+  static final String forgotPassword = '/forgotPassword';
+  static final String passwordReset = '/passwordReset';
+  static final String profile = '/profile';
+  static final String allPlaylist = '/allPlaylist';
+
+
+
+
+
 }
